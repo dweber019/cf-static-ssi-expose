@@ -1,0 +1,43 @@
+<!doctype HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamisches HTML mit Server Side Includes</title>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.13.1/lodash.min.js"></script>
+</head>
+
+<body>
+  <h1>Dynamisches HTML mit Server Side Includes</h1>
+  <dl>
+    <dt>Datum/Uhrzeit auf dem Server-Rechner:</dt>
+    <dd>
+      <!--#config timefmt="%d.%m.%Y, %H.%M" -->
+      <!--#echo var="DATE_LOCAL" -->Uhr</dd>
+    <dt>Name dieser HTML-Datei:</dt>
+    <dd>
+      <!--#echo var="DOCUMENT_NAME" -->
+    </dd>
+    <dt>Installierte Server-Software:</dt>
+    <dd>
+      <!--#echo var="SERVER_SOFTWARE" -->
+    </dd>
+    <dt>Ihr Web-Browser:</dt>
+    <dd>
+      <!--#echo var="HTTP_USER_AGENT" -->
+    </dd>
+    <dt>Ihr VCAP:</dt>
+    <dd>
+      <!--#echo var="vcap_services" -->
+    </dd>
+  </dl>
+
+  <script type="text/javascript">
+    var envs = '<!--#echo var="vcap_services" -->';
+    alert('Original string: ' + envs);
+
+    var envs = JSON.parse(_.unescape('<!--#echo var="vcap_services" -->'));
+    alert('Unescaped and json parsed: ' + envs);
+  </script>
+
+</html>
